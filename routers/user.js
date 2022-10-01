@@ -15,17 +15,20 @@ router.get('/users', async (req, res) => {
         })
 
 
-    router.post('/regPhone', async (req, res) => {
-      
-        const user = await User.findOne({
-            phone: req.body.phone,
-        })
-
-        if (!user) {
-            res.status(200).send({response: "Phone not registered"})
-        }else{
-            res.status(400).send({error: "Phone already registered"})
-        }
+   router.post('/regPhone', async (req, res) => {  
+               try{
+                    const user = await User.findOne({
+                        phone: req.body.phone,
+                    })
+                    if (!user) {
+                        res.status(200).send({ message: "Phone not registered. Available for registeration"})
+                    }else{
+                        res.status(401).send({ message: "Phone is already registered"})
+                    }
+               }
+               catch(error){
+                             res.status(404).send({ message: error})
+               }
     })
 
 
@@ -35,10 +38,10 @@ router.get('/users', async (req, res) => {
         const user = await User.findOne({
             email: req.body.email,
         })
-        if (!user) {
-            res.status(200).send({response: "Email not registered"})
+      if (!user) {
+            res.status(200).send({ message: "Email not registered. Available for registeration"})
         }else{
-            res.status(400).send({error: "Email already registered"})
+            res.status(401).send({ message: "Email is already registered"})
         }
     })
 
@@ -66,21 +69,23 @@ router.post('/createUser', async (req, res) => {
     }
 })
 
+
 router.post('/userLogin', async (req, res) => {
 
-        const user = await User.findOne({
+            const user = await User.findOne({
             phone:req.body.phone,
             email: req.body.email,
-        })
-        if(!user){
-        res.status(401).send({error: "Login failed! Check credentials"})
-        }
-        else{
-            res.status(200).send({user})
-        }
-  
-    
-   
+            })
+            if(!user){
+            res.status(401).send({ message: "Login failed"})
+            }
+            else{
+            res.status(200).send({ message: "Login successful!"})
+               if (!user) {
+                           res.status(200).
+                    }else{
+                        res.status(401)
+              } 
 })
 
 
