@@ -33,7 +33,7 @@ router.get('/users', async (req, res) => {
 
 
 
-    router.get('/regEmail', async (req, res) => {
+    router.post('/regEmail', async (req, res) => {
       
         const user = await User.findOne({
             email: req.body.email,
