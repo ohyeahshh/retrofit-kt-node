@@ -3,9 +3,8 @@ const router = express.Router()
 const app = express()
 
 
-
+//Get all users
 router.get('/users', async (req, res) => {
-    console.log("url hit")
             const user = await User.find().select({ __v:0, tokens: 0})
             if (!user) {
                 res.status(400).send({error: "No users"})
@@ -14,6 +13,7 @@ router.get('/users', async (req, res) => {
                 res.status(200).send(user)
             }
         })
+
 
     router.post('/regPhone', async (req, res) => {
       
