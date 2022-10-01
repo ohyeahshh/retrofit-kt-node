@@ -4,7 +4,16 @@ const app = express()
 
 
 
-
+router.get('/users', async (req, res) => {
+    console.log("url hit")
+            const user = await User.find().select({ __v:0, tokens: 0})
+            if (!user) {
+                res.status(400).send({error: "No users"})
+            }else{
+                
+                res.status(200).send(user)
+            }
+        })
 
     router.post('/regPhone', async (req, res) => {
       
@@ -19,17 +28,7 @@ const app = express()
         }
     })
 
-    
-    router.get('/users', async (req, res) => {
-console.log("url hit")
-        const user = await User.find().select({_id:0, __v:0,  dob: 0, tokens:0, createdOn:0, email: 0, phone:0, fatherName: 0})
-        if (!user) {
-            res.status(400).send({error: "No users"})
-        }else{
-            
-            res.status(200).send(user)
-        }
-    })
+
 
     router.get('/regEmail', async (req, res) => {
       
