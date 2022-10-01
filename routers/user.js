@@ -15,7 +15,7 @@ router.get('/users', async (req, res) => {
         })
 
 
-   router.post('/regPhone', async (req, res) => {  
+   router.get('/regPhone', async (req, res) => {  
                try{
                     const user = await User.findOne({
                         phone: req.body.phone,
