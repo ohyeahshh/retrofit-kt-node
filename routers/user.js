@@ -71,22 +71,18 @@ router.post('/createUser', async (req, res) => {
 
 
 router.post('/userLogin', async (req, res) => {
-
             const user = await User.findOne({
-            phone:req.body.phone,
-            email: req.body.email,
+                phone:req.body.phone,
+                email: req.body.email,
             })
             if(!user){
-            res.status(401).send({ message: "Login failed"})
+                res.status(401).send({ message: "Login failed"})
             }
             else{
-            res.status(200).send({ message: "Login successful!"})
-               if (!user) {
-                           res.status(200).
-                    }else{
-                        res.status(401)
-              } 
+                res.status(200).send({ message: "Login successful!"})     
+            }
 })
+
 
 
 
