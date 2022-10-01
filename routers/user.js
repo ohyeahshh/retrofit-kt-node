@@ -94,7 +94,7 @@ router.post('/loginPhone', async (req, res) => {
         res.status(401).send({error: "Login failed! Phone not registered."})
         }
         else{
-        res.status(200).send({user})
+         res.status(200).send({ message: "Great! Phone is registered.!"})
         }
     }
     catch(error){
@@ -109,7 +109,7 @@ router.post('/loginEmail', async (req, res) => {
             if(!user){
                 res.status(401).send({error: "Login failed! Email not registered."})                }
                 else{
-                res.status(200).send({user})
+                        res.status(200).send({ message: "Great! Email is registered.!"})
                 }
             }
     catch(error){
