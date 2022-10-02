@@ -23,7 +23,7 @@ router.get('/users', async (req, res) => {
                     if (!user) {
                         res.status(200).send({ message: "Phone not registered. Available for registeration", statusId: 200})
                     }else{
-                        res.status(401).send({ message: "Phone is already registered", statusId: 401 })
+                        res.status(200).send({ message: "Phone is already registered", statusId: 401 })
                     }
                }
                catch(error){
