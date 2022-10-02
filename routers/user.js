@@ -16,7 +16,8 @@ router.get('/users', async (req, res) => {
 
 
    router.get('/regPhone', async (req, res) => {  
-               const phoneNum = "9776688888"
+     
+               const phonNum = req.query.string;
                try{
           
                     const user = await User.findOne({
