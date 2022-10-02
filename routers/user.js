@@ -18,7 +18,7 @@ router.get('/users', async (req, res) => {
    router.get('/regPhone', async (req, res) => {  
                try{
                     const user = await User.findOne({
-                        phone: "9999999999",
+                        phone: "8888822222",
                     })
                     if (!user) {
                         res.status(200).send({ message: "Phone not registered. Available for registeration", statusId: 200})
