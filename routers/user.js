@@ -37,21 +37,23 @@ router.get('/users', async (req, res) => {
 
 
 
-
-
-
-
-    router.post('/regEmail', async (req, res) => {
-      
+   router.get('/regEmail', async (req, res) => {
+    console.log(req.body)
+    const email = req.query.string;
+    try{
         const user = await User.findOne({
-            email: req.body.email,
+            email: email
         })
-      if (!user) {
-            res.status(200).send({ message: "Email not registered. Available for registeration"})
-        }else{
-            res.status(401).send({ message: "Email is already registered"})
+        if (!user) {
+            res.status(200).send({ message: "Email not registered. Available for registeration", statusId: 200})
+            }else{
+                res.status(200).send({ message: "Email is already registered", statusId: 401 })
+            }  
         }
-    })
+    catch(error){
+        res.status(404).send({ message: error})
+    }
+})
 
 
 router.post('/createUser', async (req, res) => {
@@ -109,6 +111,7 @@ router.post('/loginPhone', async (req, res) => {
         res.status(400).send({error})
     }
 })
+
 
 router.post('/loginEmail', async (req, res) => {
     try{
