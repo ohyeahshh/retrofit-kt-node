@@ -2,59 +2,69 @@ const mongoose = require('mongoose')
 
 const User = new mongoose.Schema(
 	{
+		customerId: {
+			type: String,
+			
+		},
 		firstName: {
 			type: String,
 			required: true,
-			trim: true
+            trim: true
 		},
-
 		middleName: {
 			type: String,
-			trim: true
+            trim: true
 		},
-
 		lastName: {
 			type: String,
-			 trim: true
+            trim: true
 		},
-
 		email: { 
 			type: String, 
 			required: true, 
 			unique: true,
-			lowercase: true
+            lowercase: true
+          
 		},
-
 		phone: { 
 			type: String, 
 			required: true, 
 			unique: true 
 		},
-
-		fatherName: {
-			type: String, 
+        fatherName: {
+            type: String, 
 			required: true
-		},
-
-		dob: {
-			type: String, 
-			required: true
-		},
-
-		createdOn: {
+        },
+        dob: {
+            type: String, 
+            required: true
+        },
+        createdOn: {
+            type: String,
+            required: true
+        },
+		location: {
 			type: String,
-			required: true
+            required: true
 		},
-
-		tokens: [{
-		    token:{
+		imei: {
 			type: String,
-			required: true
-		    }
-		}]
-
+            required: true
+		},
+		kyc:{
+			type: Boolean,
+            required: true
+		},
+        tokens: [{
+            token:{
+                type: String,
+                required: true
+            }
+        }]
+		
+		
 	},
-	{ collection: 'infuxion-users' }
+	{ collection: 'inf-users' }
 )
 
 
