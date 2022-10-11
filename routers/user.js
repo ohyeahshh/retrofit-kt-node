@@ -37,8 +37,8 @@ router.get('/users', async (req, res) => {
 
 
 
-   router.get('/regEmail', async (req, res) => {
-    console.log(req.body)
+router.get('/regEmail', async (req, res) => {
+    
     const email = req.query.string;
     try{
         const user = await User.findOne({
@@ -56,7 +56,8 @@ router.get('/users', async (req, res) => {
 })
 
 
-router.post('/createUser', async (req, res) => {
+
+router.get('/createUser', async (req, res) => {
     let dateTime = new Date();
    
     try{
@@ -69,7 +70,10 @@ router.post('/createUser', async (req, res) => {
             email: req.body.email,
             fatherName:req.body.fatherName,
             dob: req.body.dob,    
-            createdOn:dateTime
+            createdOn:dateTime,
+            location:null,
+            imei:null,
+            kyc:false
          })
         await user.save()
         res.status(200).send({user})
@@ -78,6 +82,7 @@ router.post('/createUser', async (req, res) => {
         res.status(400).send({error})
     }
 })
+
 
 
 router.post('/userLogin', async (req, res) => {
