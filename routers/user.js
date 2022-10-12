@@ -18,7 +18,7 @@ router.get('/users', async (req, res) => {
 
         router.get('/regPhone', async (req, res) => {  
   
-            const phoneNum = req.query.string;
+            const phoneNum = req.query.phone;
             try{
        
                  const user = await User.findOne({
