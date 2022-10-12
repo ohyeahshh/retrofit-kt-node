@@ -39,7 +39,7 @@ router.get('/users', async (req, res) => {
 
 router.get('/regEmail', async (req, res) => {
     
-    const email = req.query.string;
+    const email = req.query.email;
     try{
         const user = await User.findOne({
             email: email
