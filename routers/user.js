@@ -37,7 +37,7 @@ router.get('/users', async (req, res) => {
 
         router.post('/regPhone', async (req, res) => {  
   
-            const phoneNum = req.query.phone;
+            const phoneNum = req.body.phone;
             try{
        
                  const user = await User.findOne({
