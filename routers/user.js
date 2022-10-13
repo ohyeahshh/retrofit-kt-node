@@ -43,12 +43,12 @@ router.post('/hello', async (req, res) => {
  })
 
         router.post('/checkPhone', async (req, res) => {  
-  
-            const phoneNum = req.body.phone;
+            console.log(req.body.phone);
+            const phone = req.body.phone;
             try{
        
                  const user = await User.findOne({
-                     phone: phoneNum,
+                     phone: phone,
                  })
                  if (!user) {
                      res.status(200).send({ message: "Phone not registered. Available for registeration", phone: phone, statusId: 200})
