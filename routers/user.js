@@ -103,7 +103,7 @@ router.post('/createUser', async (req, res) => {
             kyc:false
          })
         await user.save()
-        res.status(201).send({statusId:201, user:user, message: "User Created"})
+        res.status(201).send({statusId:201, message: "User Created"})
     }
     catch(error){
         res.status(400).send({statusId:400, message: "Something went wrong. Please try again."})
