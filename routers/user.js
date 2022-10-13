@@ -42,11 +42,13 @@ router.post('/hello', async (req, res) => {
             }
  })
 
-        router.post('/checkPhone', async (req, res) => {  
+
+//Check Phone
+            router.post('/checkPhone', async (req, res) => {  
             console.log(req.body.phone);
             const phone = req.body.phone;
             try{
-       
+
                  const user = await User.findOne({
                      phone: phone,
                  })
@@ -61,6 +63,25 @@ router.post('/hello', async (req, res) => {
             }
  })
 
+//Check Email
+ router.post('/checkEmail', async (req, res) => {  
+    console.log(req.body.email);
+    const email = req.body.email;
+    try{
+
+         const user = await User.findOne({
+            email: email,
+         })
+         if (!user) {
+             res.status(200).send({ message: "Email not registered. Available for registeration", email: email, statusId: 200})
+         }else{
+             res.status(200).send({ message: "Email is already registered",  email: email, statusId: 401 })
+         }
+    }
+    catch(error){
+                  res.status(404).send({statusId: 404, message: error, email:email})
+    }
+})
 
 
 
