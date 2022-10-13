@@ -14,6 +14,12 @@ router.get('/users', async (req, res) => {
             }
         })
 
+router.post('/hello', async (req, res) => {
+         
+            console.log("hello")
+              res.status(200).send({output: "Hello"})
+        })
+
 
 
         router.get('/regPhone', async (req, res) => {  
