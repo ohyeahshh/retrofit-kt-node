@@ -84,55 +84,33 @@ router.post('/hello', async (req, res) => {
 })
 
 
-
-
-
-
-router.get('/regEmail', async (req, res) => {
+router.post('/createUser', async (req, res) => {
+    console.log(req.body)
+    let dateTime = new Date();     
+    try{
     
-    const email = req.query.email;
-    try{
-        const user = await User.findOne({
-            email: email
-        })
-        if (!user) {
-            res.status(200).send({ message: "Email not registered. Available for registeration", statusId: 200})
-            }else{
-                res.status(200).send({ message: "Email is already registered", statusId: 401 })
-            }  
-        }
-    catch(error){
-        res.status(404).send({ message: error})
-    }
-})
-
-
-
-router.get('/createUser', async (req, res) => {
-    let dateTime = new Date();
-   
-    try{
-       console.log(req.body)
         const user = new User({
             firstName: req.body.firstName,
-            secondName: req.body.secondName,
+            middleName: req.body.middleName,
             lastName: req.body.lastName,
             phone:req.body.phone,
             email: req.body.email,
             fatherName:req.body.fatherName,
             dob: req.body.dob,    
             createdOn:dateTime,
-            location:null,
-            imei:null,
+            imei:"null",
+            location:"null",
             kyc:false
          })
         await user.save()
-        res.status(200).send({user})
+        res.status(201).send({statusId:201, user:user, message: "User Created"})
     }
     catch(error){
-        res.status(400).send({error})
+        res.status(400).send({statusId:400, message: "Something went wrong. Please try again."})
+    
     }
 })
+
 
 
 
