@@ -15,8 +15,9 @@ router.get('/users', async (req, res) => {
         })
 
 router.post('/hello', async (req, res) => {
-         
-            console.log("hello", req.body)
+            console.log("Phone")
+         phone = req.body.phone
+            console.log(phone)
               res.status(200).send({output: "Hello"})
         })
 
