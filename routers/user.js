@@ -42,7 +42,7 @@ router.post('/hello', async (req, res) => {
             }
  })
 
-        router.post('/regPhone', async (req, res) => {  
+        router.post('/checkPhone', async (req, res) => {  
   
             const phoneNum = req.body.phone;
             try{
@@ -51,13 +51,13 @@ router.post('/hello', async (req, res) => {
                      phone: phoneNum,
                  })
                  if (!user) {
-                     res.status(200).send({ message: "Phone not registered. Available for registeration", statusId: 200})
+                     res.status(200).send({ message: "Phone not registered. Available for registeration", phone: phone, statusId: 200})
                  }else{
-                     res.status(200).send({ message: "Phone is already registered", statusId: 401 })
+                     res.status(200).send({ message: "Phone is already registered",  phone: phone, statusId: 401 })
                  }
             }
             catch(error){
-                          res.status(404).send({ message: error})
+                          res.status(404).send({statusId: 404, message: error, phone:phone})
             }
  })
 
