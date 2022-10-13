@@ -16,9 +16,9 @@ router.get('/users', async (req, res) => {
 
 router.post('/hello', async (req, res) => {
             console.log("Phone")
-         phone = req.body;
+         phone = req.body.phone;
             console.log(phone)
-              res.status(200).send({ message: "Phone not registered. Available for registeration", statusId: 200})
+              res.status(200).send({ message: "Phone not registered. Available for registeration", phone: phone, statusId: 200})
         })
 
 
