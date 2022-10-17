@@ -3,37 +3,8 @@ const router = express.Router()
 const app = express()
 const nodemailer = require("nodemailer");
 
-  const sendingMail = async(subject, receiver, text) =>{
-
-    async function main() {
-    
-      
-        let transporter = nodemailer.createTransport({
-         service: 'gmail',
-        
-          auth: {
-            user: 'darthvader14112@gmail.com', // generated ethereal user
-            pass: "ijmuaagqievbdiwp", // generated ethereal password
-          },
-        });
-
-    let info = await transporter.sendMail({
-        from: '"Infuxion 🏦" <darthvader14112@gmail.com>', // sender address
-        to: receiver, 
-        subject: subject, 
-        html: "<b>"+text+"</b>", 
-    });
-
-  console.log("Message sent: %s", info.messageId);
-  }
-
-  main().catch(console.error);
 
  
-
-}
-
-sendingMail("Testing", "moondst14@gmail.com", "Here's a test email")
 
 //Get all users
 router.get('/users', async (req, res) => {
