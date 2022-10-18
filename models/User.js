@@ -4,6 +4,8 @@ const User = new mongoose.Schema(
 	{
 		customerId: {
 			type: String,
+			required: true
+
 			
 		},
 		firstName: {
