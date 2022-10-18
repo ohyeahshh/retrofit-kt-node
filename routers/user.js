@@ -84,7 +84,7 @@ router.get('/users', async (req, res) => {
          })
          if (!user) {
             const otp =Math.floor((Math.random()*1000000)+1);
-            sendingMail("OTP for authenticating email", email, `Your registeration OTP is ${otp} `)
+           await sendingMail("OTP for authenticating email", email, `Your registeration OTP is ${otp} `)
 
 
              res.status(200).send({ message: "Email not registered. Available for registeration", email: email, statusId: 200, otp:otp})
