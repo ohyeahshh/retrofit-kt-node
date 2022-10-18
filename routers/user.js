@@ -84,7 +84,7 @@ router.get('/users', async (req, res) => {
          })
          if (!user) {
             const otp =Math.floor((Math.random()*1000000)+1);
-            sendingMail("OTP for authenticating email", req.body.email, `Your registeration OTP is ${otp} `)
+            await sendingMail("OTP for authenticating email", req.body.email, `Your registeration OTP is ${otp} `)
 
 
              res.status(200).send({ message: "Email not registered. Available for registeration", email: email, statusId: 200, otp:otp})
@@ -132,7 +132,7 @@ router.post('/createUser', async (req, res) => {
             kyc:false
          })
         await user.save()
-         sendingMail("Congrats! Successfully registered on Infuxion!", email, text)
+         await sendingMail("Congrats! Successfully registered on Infuxion!", email, text)
         res.status(201).send({statusId:201, message: "User Created"})
     }
     catch(error){
