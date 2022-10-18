@@ -3,9 +3,6 @@ const router = express.Router()
 const app = express()
 const nodemailer = require("nodemailer");
 
-// async..await is not allowed in global scope, must use a wrapper
-
-
 
 
 
