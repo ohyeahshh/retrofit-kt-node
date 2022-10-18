@@ -83,7 +83,8 @@ router.get('/users', async (req, res) => {
             email: email,
          })
          if (!user) {
-            const otp =Math.floor((Math.random()*1000000)+1);
+                       const otp =(Math.floor(100000 + Math.random() * 900000)+1);
+
             await sendingMail("OTP for authenticating email", req.body.email, `Your registeration OTP is ${otp} `)
 
 
