@@ -13,7 +13,7 @@ require('./db/db')
 
 const mongoose = require('mongoose')
 0
-mongoose.connect("mongodb+srv://test:Qd7lc4xhRhQTa9CW@cluster0.jo8w72a.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGO_URL)
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
