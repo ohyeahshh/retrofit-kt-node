@@ -3,6 +3,18 @@ const router = express.Router()
 const app = express()
 const nodemailer = require("nodemailer");
 
+const SibApiV3Sdk = require('sib-api-v3-sdk');
+let defaultClient = SibApiV3Sdk.ApiClient.instance;
+
+let apiKey = defaultClient.authentications['api-key'];
+apiKey.apiKey = process.env.SENDBLUE_API_KEY
+
+let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+
+
+
 
 
 
@@ -12,16 +24,18 @@ const nodemailer = require("nodemailer");
     
       
         let transporter = nodemailer.createTransport({
-         service: 'gmail',
+         host: ' smtp-relay.sendinblue.com ',
+         port: 587,
+         secure: false,
         
           auth: {
-            user: 'darthvader14112@gmail.com', // generated ethereal user
-            pass: "ijmuaagqievbdiwp", // generated ethereal password
+            user: 'divyayashsaxena2000@gmail.com', // generated ethereal user
+            pass: "UItmH5RhSsBDVw3Q", // generated ethereal password
           },
         });
 
     let info = await transporter.sendMail({
-        from: '"Infuxion 🏦" <darthvader14112@gmail.com>', // sender address
+        from: '"Infuxion 🏦" <divyayashsaxena2000@gmail.com>', // sender address
         to: receiver, 
         subject: subject, 
         html: "<p>"+text+"</p>", 
@@ -83,10 +97,19 @@ router.get('/users', async (req, res) => {
             email: email,
          })
          if (!user) {
-                       const otp =(Math.floor(100000 + Math.random() * 900000)+1);
-
-            await sendingMail("OTP for authenticating email", req.body.email, `Your registeration OTP is ${otp} `)
-
+            
+            const otp =(Math.floor(100000 + Math.random() * 900000)+1);
+            sendSmtpEmail.subject = "{{params.subject}}";
+            sendSmtpEmail.htmlContent = "<html><body ><p style='background:#8D32A7; font-size:14px; padding:20px;color:#fff'>Your registeration OTP is: {{params.parameter}}</p></body></html>";
+            sendSmtpEmail.sender = {"name":"Infuxion 🏦","email":"divyayashsaxena2000@gmail.com"};
+            sendSmtpEmail.to = [{"email":email, "name":"Moon Dust"}];
+            sendSmtpEmail.params = {"parameter":otp,"subject":"OTP for authenticating email"};
+            
+            apiInstance.sendTransacEmail(sendSmtpEmail).then(function(data) {
+              console.log('Returned data: ' + JSON.stringify(data));
+            }, function(error) {
+              console.error(error);
+            });
 
              res.status(200).send({ message: "Email not registered. Available for registeration", email: email, statusId: 200, otp:otp})
          }else{
@@ -100,12 +123,26 @@ router.get('/users', async (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
 router.post('/createUser', async (req, res) => {
     console.log(req.body)
     let dateTime = new Date();  
     const code =Math.floor((Math.random()*10000000)+1);
             const custId =`INF${code}`;
+            const text =`Your registeration details are: Customer Id: ${custId}, Full Name: ${req.body.firstName} ${req.body.middleName} ${req.body.lastName}, Phone: ${req.body.phone}, Email: ${req.body.email}`;
     const email = req.body.email
+    const phone = req.body.phone
+    const name = req.body.firstName
+    const fatherName = req.body.fatherName
+    const dob = req.body.dob
+    const fullName = req.body.firstName+' '+req.body.middleName+' '+req.body.lastName
             console.log(custId)   
     try{
     
@@ -114,16 +151,28 @@ router.post('/createUser', async (req, res) => {
             firstName: req.body.firstName,
             middleName: req.body.middleName,
             lastName: req.body.lastName,
-            phone:req.body.phone,
-            email: req.body.email,
-            fatherName:req.body.fatherName,
-            dob: req.body.dob,    
+            phone:phone,
+            email: email,
+            fatherName:fatherName,
+            dob: dob,    
             createdOn:dateTime,
-            imei:"null",
-            location:req.body.location,
+            imei:"Null",
+            location: req.body.location,
             kyc:false
          })
         await user.save()
+        sendSmtpEmail.subject = "Congrats, {{params.name}}! You are successfully registered on Infuxion!";
+        sendSmtpEmail.htmlContent = "<html><body ><p style='background:#8D32A7; font-size:14px; padding:20px;color:#fff'>Your registeration information is:</p> <br> <p>Customer Id:{{params.custId}} </p><p>Name:{{params.name}} </p><p>Email:{{params.email}} </p> <p>Phone:{{params.phone}} </p> <p>Father's Name:{{params.fatherName}} </p><p>DOB:{{params.dob}} </p></body></html>";
+        sendSmtpEmail.sender = {"name":"Infuxion 🏦","email":"divyayashsaxena2000@gmail.com"};
+        sendSmtpEmail.to = [{"email":email, "name":"Moon Dust"}];
+        sendSmtpEmail.params = {"name":name, "fullName": fullName, "custId":custId, "dob": dob, "fatherName": fatherName, "phone":phone, "email": email,  "subject":"OTP for authenticating email"};
+        
+        apiInstance.sendTransacEmail(sendSmtpEmail).then(function(data) {
+          console.log('Returned data: ' + JSON.stringify(data));
+        }, function(error) {
+          console.error(error);
+        });
+        
         res.status(201).send({statusId:201, message: "User Created"})
     }
     catch(error){
