@@ -100,20 +100,11 @@ router.get('/users', async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
 router.post('/createUser', async (req, res) => {
     console.log(req.body)
     let dateTime = new Date();  
     const code =Math.floor((Math.random()*10000000)+1);
             const custId =`INF${code}`;
-            const text =`Your registeration details are: Customer Id: ${custId}, Full Name: ${req.body.firstName} ${req.body.middleName} ${req.body.lastName}, Phone: ${req.body.phone}, Email: ${req.body.email}`;
     const email = req.body.email
             console.log(custId)   
     try{
@@ -129,11 +120,10 @@ router.post('/createUser', async (req, res) => {
             dob: req.body.dob,    
             createdOn:dateTime,
             imei:"null",
-            location:"null",
+            location:req.body.location,
             kyc:false
          })
         await user.save()
-         await sendingMail("Congrats! Successfully registered on Infuxion!", email, text)
         res.status(201).send({statusId:201, message: "User Created"})
     }
     catch(error){
