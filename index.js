@@ -1,5 +1,4 @@
 const dotenv = require('dotenv')
-dotenv.config({path: './.env'})
 const express = require('express')
 const userRouter = require('./routers/user')
 
@@ -12,7 +11,7 @@ app.use(userRouter)
 require('./db/db')
 
 const mongoose = require('mongoose')
-0
+
 mongoose.connect(process.env.MONGO_URL)
 
 const bcrypt = require('bcryptjs')
