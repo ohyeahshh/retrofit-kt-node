@@ -76,6 +76,32 @@ router.post('/saveImei', async (req, res) => {
 
 })
 
+//Save Permissions
+router.post('/savePermissions', async (req, res) => {
+    console.log(req.body)
+    Permissions.countDocuments().then(async(count_documents) =>{
+        try{
+            const count = (count_documents).toLocaleString('en-US', {minimumIntegerDigits: 9, useGrouping:false})
+            const permissions = new Permissions({
+                isLocationGranted : req.body.isLocationGranted,
+                isReadSmsGranted : req.body.isReadSmsGranted,
+                isContactsGranted : req.body.isContactsGranted, 
+                createdOn:new Date()
+             })
+             console.log(permissions)
+            await permissions.save()
+            res.status(201).send({message: "Record added"})
+        }
+        catch(err){
+            res.status(404).send({message: error})
+        }
+	}).catch((err) => {
+        res.status(404).send({message: err})
+	  console.log(err.Message);
+	})
+
+
+})
 
 //Get all users
 router.get('/users', async (req, res) => {
