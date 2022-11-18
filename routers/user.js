@@ -50,6 +50,32 @@ let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
 
 }
 
+  
+//Save IMEI
+router.post('/saveImei', async (req, res) => {
+    console.log(req.body)
+    ImeiRecord.countDocuments().then(async(count_documents) =>{
+        try{
+            const count = (count_documents).toLocaleString('en-US', {minimumIntegerDigits: 9, useGrouping:false})
+            const imeiRecord = new ImeiRecord({
+                tempId: `INF-TEMP-${count}`,
+                imei: req.body.imei,    
+                createdOn:new Date()
+             })
+             console.log(imeiRecord)
+            await imeiRecord.save()
+            res.status(201).send({message: "Record added"})
+        }
+        catch(err){
+            res.status(404).send({message: error})
+        }
+	}).catch((err) => {
+        res.status(404).send({message: err})
+	  console.log(err.Message);
+	})
+
+})
+
 
 //Get all users
 router.get('/users', async (req, res) => {
@@ -215,5 +241,6 @@ router.post('/loginPhone', async (req, res) => {
 
 
 const User = require("../models/User");
+const ImeiRecord = require("../models/ImeiRecord");
 
 module.exports = router
