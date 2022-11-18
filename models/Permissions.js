@@ -1,0 +1,29 @@
+const mongoose = require('mongoose')
+
+const Permissions = new mongoose.Schema(
+	{
+		isLocationGranted: {
+			type: Boolean,
+			required: true	
+		},
+		isReadSmsGranted: {
+            type: Boolean,
+			required: true	
+		},
+        isContactsGranted: {
+            type: Boolean,
+			required: true	
+        },
+        createdOn: {
+            type: String,
+            required: true
+        },
+
+	
+	},
+	{ collection: 'inf-permissions' }
+)
+
+
+const model = mongoose.model('Permissions', Permissions)
+module.exports = model
